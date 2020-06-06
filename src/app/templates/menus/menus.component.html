@@ -1,0 +1,62 @@
+<h3 class="display-4">Список меню</h3>
+<div *ngIf="menus?.length===0">
+  <h3 class="display-3">Ничего не найдено</h3>
+</div>
+<div *ngIf="menus?.length!==0">
+  <table class="table table-borderless">
+    <thead >
+    <tr>
+      <th>Название</th>
+<!--      <th>Рецепт</th>-->
+      <th>Список блюд</th>
+<!--      <th>Цена за порцию</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let menu of menus">
+      <td> {{menu.name}} </td>
+
+      <td>
+        <div *ngIf="menu.dishes.length === 0">
+          <span>Пока не содержит блюд</span>
+        </div>
+        <div *ngFor="let dish of menu?.dishes">
+          <span>{{dish.name}}</span>
+        </div>
+      </td>
+<!--      <td> {{dish.price}} </td>-->
+<!--      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_COOKER')">-->
+<!--        <td>-->
+<!--          <a routerLink="/cooker/dishes/editDish/{{dish.id}}" class="btn btn-primary float-left">Редактировать блюдо</a>-->
+<!--        </td>-->
+<!--      </div>-->
+      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_COOKER')">
+        <td>
+          <a (click)="deleteMenu(menu.id)" class="btn btn-primary float-left">Удалить меню</a>
+        </td>
+      </div>
+    </tr>
+
+    </tbody>
+  </table>
+  <br>
+  <ul class="nav nav-pills">
+    <li class="nav-item" *ngFor="let p of pages; let i=index">
+      <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+    </li>
+  </ul>
+</div>
+
+<!--<div class="alert alert-success" *ngIf="message">-->
+<!--  {{message}}-->
+<!--</div>-->
+
+
+<div *ngIf="currentUser && currentUser.roles.includes('ROLE_COOKER')">
+  <a routerLink="/cooker/menus/addMenu"  class="btn btn-primary float-right">Добавить меню</a>
+</div>
+
+<div *ngIf="currentUser && currentUser.roles.includes('ROLE_COOKER')">
+  <a  class="btn btn-primary" [routerLink]="['/cooker']" >Назад</a>
+</div>
+

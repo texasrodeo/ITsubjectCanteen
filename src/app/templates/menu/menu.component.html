@@ -1,0 +1,16 @@
+<h1>{{menu.name}}</h1>
+<h3>Список блюд</h3>
+<div class="list-group">
+  <div *ngFor="let m of menu.dishes">
+<!--    <a href="/menu/{{m.id}}" class="list-group-item">-->
+      <h4 class="list-group-item-heading">{{m.name}}</h4>
+      <h5 class="list-group-item-text">Цена: {{m.price}}</h5>
+      <a class="btn btn-primary" (click)="addTobag(m)">Добавить в заказ</a>
+<!--    </a>-->
+  </div>
+
+</div>
+<div class="alert alert-success" *ngIf="message">
+  {{message}}
+</div>
+

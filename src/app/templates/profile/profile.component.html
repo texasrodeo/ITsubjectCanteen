@@ -1,0 +1,47 @@
+<div class="container" *ngIf="currentUser">
+  <header class="jumbotron">
+    <h3>
+      <strong>Личный кабинет</strong>
+    </h3>
+  </header>
+  <p>
+  </p>
+<!--  <p>-->
+<!--    <strong>Email:</strong>-->
+<!--    {{ currentUser.email }}-->
+<!--    <br>-->
+<!--    <span *ngIf="emailConfirmed">Адрес почты подтвержден</span>-->
+<!--    <span *ngIf="!emailConfirmed">Адрес почты не подтвержден. Перейдите по ссылке, отправленной Вам в письме,-->
+<!--    чтобы иметь возможность совершать покупки на сайте</span>-->
+<!--  </p>-->
+
+  <ul>
+    <li *ngFor="let role of currentUser.roles">
+      <span *ngIf="role === 'ROLE_ADMIN'">Вы вошли под ролью администратор</span>
+      <span *ngIf="role === 'ROLE_COOKER'">Вы вошли под ролью повар</span>
+      <span *ngIf="role === 'ROLE_ACCOUNTANT'">Вы вошли под ролью бухгалтера</span>
+      <span *ngIf="role === 'ROLE_CASHIER'">Вы вошли под ролью кассира</span>
+    </li>
+  </ul>
+  <div *ngIf="!currentUser.roles.includes('ROLE_COOKER')">
+  </div>
+
+  <div *ngIf="currentUser.roles.includes('ROLE_ACCOUNTANT')">
+    <a class="btn btn-primary" [routerLink]="['/accountant']">На страницу бухгалтерского учета</a>
+  </div>
+
+  <div *ngIf="currentUser.roles.includes('ROLE_COOKER')">
+    <a class="btn btn-primary" [routerLink]="['/cooker']">На страницу управления меню</a>
+  </div>
+
+  <div *ngIf="currentUser.roles.includes('ROLE_CASHIER')">
+    <a class="btn btn-primary" [routerLink]="['/cashier']">На страницу кассира</a>
+  </div>
+
+
+</div>
+
+
+<div class="alert alert-danger" *ngIf="!currentUser">
+  Войдите в систему
+</div>

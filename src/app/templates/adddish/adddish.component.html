@@ -1,0 +1,128 @@
+<h2>Добавление блюда</h2>
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <form
+      (ngSubmit)="f.form.valid && onSubmitDish()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+
+        <label for="name">Название блюда</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.name"
+          required
+
+          #name="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && name.invalid"
+        >
+          Обязательное поле
+        </div>
+      </div>
+      <div class="form-group">
+
+        <label for="recipe">Рецепт приготовления </label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.recipe"
+          required
+
+          #recipe="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && recipe.invalid"
+        >
+          Обязательное поле
+        </div>
+      </div>
+      <div class="form-group">
+
+        <label for="price">Цена за порцию</label>
+        <input
+          type="number"
+          class="form-control"
+          name="price"
+          [(ngModel)]="form.price"
+          required
+
+          #price="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && price.invalid"
+        >
+          Обязательное поле
+        </div>
+      </div>
+
+    </form>
+
+    <div class="marg-bottom">
+      <div class="row mb-3">
+        <h2 class="col-xl-3 col-md-3 col-sm-9 ">Ингредиенты</h2>
+        <a id="addIngredient" class=" marg add-a" (click)="addIngredient()" >
+          <img class="add  rounded-circle " src="https://img.icons8.com/material-rounded/30/000000/plus-math.png">
+        </a>
+      </div>
+      <div *ngFor="let a of listIngredients; let ai=index"  [attr.data-index]="ai"  class="rowTable row">
+
+        <div class="col-12 col-md-8 ">
+          <h4>{{a.name}}</h4>
+<!--          <p>{{a.email}}</p>-->
+        </div>
+
+
+        <div class="col-6 col-md-4">
+          <div class="row-reverse ">
+            <button attr.id="deleteIngredient_{{ai}}" type="button" class="btn  btn-outline-secondary float-right" (click)="deleteIngredient(ai)">Удалить</button>
+          </div>
+        </div>
+
+
+      </div>
+      <form id="ingredientForm" [formGroup] = "ingredientForm" style="display:none; " (ngSubmit)="onSubmitDish()">
+        <div class="form-group">
+          <label for="inrgedient">Название блюда </label>
+          <select class="form-control" formControlName="product" id="product" [(ngModel)]="selectedProduct" >
+            <option *ngFor="let product of products" [value]="product.id" selected>{{product.name}}</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-secondary" type="submit" [disabled]="!ingredientForm.valid" (click)="saveIngredient()">Сохранить</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="closeIngredient()">Отменить</button>
+        </div>
+
+      </form>
+
+  </div>
+</div>
+</div>
+
+<div class="row ml-0" >
+  <button type="button" class="btn btn-outline-secondary btn-lg" (click)="onSubmit()"
+          [disabled]="!f.valid">Сохранить</button>
+</div>
+
+
+<div *ngIf="message">
+  <div class="alert alert-success">{{message}}</div>
+</div>
+
+
+<div *ngIf="currentUser && currentUser.roles.includes('ROLE_COOKER')">
+  <a  class="btn btn-primary" [routerLink]="['/cooker', 'dishes']" >Назад</a>
+</div>

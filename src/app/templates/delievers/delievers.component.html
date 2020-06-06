@@ -1,0 +1,62 @@
+<div *ngIf="key === 'active'">
+  <h1>Список активных поставок</h1>
+</div>
+<div *ngIf="key === 'confirmed'">
+  <h1>Список подтвержденных поставок</h1>
+</div>
+
+<div *ngIf="deliveries?.length===0">
+  <h3 class="display-3">Ничего не найдено</h3>
+</div>
+<div *ngIf="deliveries?.length!==0">
+  <table class="table table-borderless">
+    <thead >
+    <tr>
+      <th>Код поставки</th>
+      <th>Поставщик</th>
+      <th>Поставляемый продукт</th>
+      <th>Дата заказа</th>
+      <th>Сумма поставки</th>
+      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_ACCOUNTANT')">
+        <th>
+          Действия
+        </th>
+      </div>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let delivery of deliveries">
+      <td> {{delivery.id}} </td>
+
+      <td> {{delivery.provider.name}} </td>
+      <td> {{delivery.product.name}} </td>
+      <td> {{delivery.date}} </td>
+      <td> {{delivery.sum}} </td>
+            <div *ngIf="currentUser && currentUser.roles.includes('ROLE_ACCOUNTANT') && key==='active'">
+              <td>
+                <a (click)="acceptDelivery(delivery.id)" class="btn btn-primary float-left">Подтвердить принятие поставки</a>
+              </td>
+            </div>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <ul class="nav nav-pills">
+    <li class="nav-item" *ngFor="let p of pages; let i=index">
+      <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+    </li>
+  </ul>
+</div>
+
+<!--<div class="alert alert-success" *ngIf="message">-->
+<!--  {{message}}-->
+<!--</div>-->
+
+<div *ngIf="message">
+  <div class="alert alert-success">{{message}}</div>
+</div>
+
+
+<a  class="btn btn-primary" [routerLink]="['/accountant']" >Назад</a>
+
+

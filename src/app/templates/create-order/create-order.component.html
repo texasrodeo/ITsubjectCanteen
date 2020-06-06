@@ -1,0 +1,97 @@
+<h3 class="display-4">Корзина</h3>
+<div *ngIf="items?.length===0">
+  <h3 class="display-3">Ничего не найдено</h3>
+</div>
+<div *ngIf="items?.length!==0">
+  <table class="table table-borderless">
+    <thead >
+    <tr>
+      <th>Название блюда</th>
+      <th>Количество</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <td> {{item.dish.name}} </td>
+      <td>
+        {{item.quantity}}
+
+      </td>
+
+
+
+    </tr>
+
+    </tbody>
+  </table>
+  <br>
+</div>
+
+<div *ngIf="items?.length!==0">
+  <div class="alert alert-info">
+    Итого: {{calculateSum()}} рублей
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <form
+      (ngSubmit)="f.form.valid && onSubmitDish()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+
+        <label for="name">Ваше имя</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.name"
+          required
+
+          #name="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && name.invalid"
+        >
+          Обязательное поле
+        </div>
+      </div>
+      <div class="form-group">
+
+        <label for="recipe">Телефон</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          [(ngModel)]="form.number"
+          required
+
+          #Phone="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && Phone.invalid"
+        >
+          Обязательное поле
+        </div>
+      </div>
+
+    </form>
+
+
+    </div>
+  </div>
+
+<div class="row ml-0" >
+  <button type="button" class="btn btn-outline-secondary btn-lg" (click)="sendOrder()"
+          [disabled]="!f.valid">Оформить заказ</button>
+</div>
+<a  class="btn btn-primary" [routerLink]="['/bag']" >Назад в корзину</a>
+
+

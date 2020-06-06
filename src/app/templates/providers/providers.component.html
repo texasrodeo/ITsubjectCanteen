@@ -1,0 +1,46 @@
+<h3 class="display-4">Список поставщиков</h3>
+<div *ngIf="products?.length===0">
+  <h3 class="display-3">Ничего не найдено</h3>
+</div>
+<div *ngIf="products?.length!==0">
+  <table class="table table-borderless">
+    <thead >
+    <tr>
+      <th>Название</th>
+      <th>Телефон</th>
+<!--      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_ACCOUNTANT')">-->
+<!--        <th>-->
+<!--          Действия-->
+<!--        </th>-->
+<!--      </div>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products">
+      <td> <a routerLink="/gamestore/{{product.id}}" >{{product.name}}</a> </td>
+      <td> {{product.phone}} </td>
+      <!--      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_ACCOUNTANT')">-->
+      <!--        <td>-->
+      <!--          <button (click)="deleteAccount(account.id)" class="btn-primary float-left">Удалить аккаунт</button>-->
+      <!--        </td>-->
+      <!--      </div>-->
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <ul class="nav nav-pills">
+    <li class="nav-item" *ngFor="let p of pages; let i=index">
+      <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+    </li>
+  </ul>
+</div>
+
+<!--<div class="alert alert-success" *ngIf="message">-->
+<!--  {{message}}-->
+<!--</div>-->
+
+
+<div *ngIf="currentUser && currentUser.roles.includes('ROLE_ACCOUNTANT')">
+  <a routerLink="/accountant/providers/addProvider"  class="btn btn-primary float-right">Добавить поставщика</a>
+</div>
+<a  class="btn btn-primary" [routerLink]="['/accountant']" >Назад</a>

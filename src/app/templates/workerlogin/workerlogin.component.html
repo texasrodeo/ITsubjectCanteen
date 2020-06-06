@@ -1,0 +1,121 @@
+<div align="center">
+  <h3 class="display-3">Регистрация</h3>
+  <div class="col-md-6">
+    <div class="card card-container">
+      <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="username">Имя пользователя</label>
+          <input
+            id="username"
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="form.username"
+            required
+            minlength="3"
+            maxlength="20"
+            #username="ngModel"
+          />
+          <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+            <div *ngIf="username.errors.required">Обязательное поле</div>
+            <div *ngIf="username.errors.minlength">
+              Имя пользователя должно быть не короче 3 символов
+            </div>
+            <div *ngIf="username.errors.maxlength">
+              Слишком длинное имя(требуемая длина до 20 знаков)
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="form.email"
+            required
+            email
+            #email="ngModel"
+          />
+          <div class="alert-danger" *ngIf="f.submitted && email.invalid">
+            <div *ngIf="email.errors.required">Обязательное поле</div>
+            <div *ngIf="email.errors.email">
+              Введите корректный адрес e-mail
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username">Секретный ключ</label>
+          <input
+            id="secret"
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="form.secret"
+            required
+            minlength="3"
+            maxlength="20"
+            #secret="ngModel"
+          />
+          <div class="alert-danger" *ngIf="f.submitted && secret.invalid">
+            <div *ngIf="secret.errors.required">Обязательное поле</div>
+            <div *ngIf="secret.errors.minlength">
+              Имя пользователя должно быть не короче 3 символов
+            </div>
+            <div *ngIf="secret.errors.maxlength">
+              Слишком длинное имя(требуемая длина до 20 знаков)
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="form.password"
+            required
+            minlength="6"
+            #password="ngModel"
+          />
+          <div class="alert-danger" *ngIf="f.submitted && password.invalid">
+            <div *ngIf="password.errors.required">Обязательное пол</div>
+            <div *ngIf="password.errors.minlength">
+              Пароль должен быть минимум 6 символов в длину
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sort">Роль:</label>
+          <select class="form-control" name="sort" id="sort" [(ngModel)]="role" >
+            <option value="ROLE_ADMIN" selected>Администратор</option>
+            <option value="ROLE_COOKER">Повар</option>
+            <option value="ROLE_ACCOUNTANT">Бухгалтер</option>
+            <option value="ROLE_CASHIER">Кассир</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">Зарегистрироваться</button>
+        </div>
+
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+          Ошибка<br />{{ errorMessage }}
+        </div>
+      </form>
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Успешная регистрация.
+        <a class="nav-link" routerLink="/">На главную</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+

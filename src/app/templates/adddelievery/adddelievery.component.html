@@ -1,0 +1,66 @@
+<h1>Заказ поставки</h1>
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <form
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+
+
+        <div class="form-group">
+          <label for="product">Название продукта:</label>
+          <select class="form-control" name="product" id="product" [(ngModel)]="selectedProduct" >
+              <option *ngFor="let product of products" [value]="product.id" selected>{{product.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+
+
+        <div class="form-group">
+          <label for="provider">Поставщик:</label>
+          <select class="form-control" name="provider" id="provider" [(ngModel)]="selectedProvider" >
+            <option *ngFor="let provider of providers" [value]="provider.id" >{{provider.name}}</option>
+
+
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+
+
+        <div class="form-group">
+
+          <label for="tentacles">Количество килограмм (1-100):</label>
+
+          <input type="number" id="tentacles" name="tentacles" [(ngModel)]="quantity"
+                 min="10" max="100">
+        </div>
+      </div>
+      <div class="form-group">
+        <div *ngIf="quantity && selectedProduct">
+          <label for="sum">Сумма, руб:</label>
+          <input type="text" id="sum" [value]="count(selectedProduct, quantity)"  [(ngModel)]="sum" READONLY>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">
+          Добавить
+        </button>
+      </div>
+
+    </form>
+
+
+  </div>
+</div>
+
+<br>
+<div *ngIf="message">
+  <div class="alert alert-success">{{message}}</div>
+</div>
+

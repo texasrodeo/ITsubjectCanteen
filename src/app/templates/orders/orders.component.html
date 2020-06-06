@@ -1,0 +1,68 @@
+<div *ngIf="key === 'active'">
+  <h1>Список активных заказов</h1>
+</div>
+<div *ngIf="key === 'confirmed'">
+  <h1>Список подтвержденных заказов</h1>
+</div>
+
+<div *ngIf="orders?.length===0">
+  <h3 class="display-3">Ничего не найдено</h3>
+</div>
+<div *ngIf="orders?.length!==0">
+  <table class="table table-borderless">
+    <thead >
+    <tr>
+      <th>Код заказа</th>
+      <th>Список блюд</th>
+      <th>Сумма заказа</th>
+      <th>Имя клиента</th>
+      <th>Телефон</th>
+      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_CASHIER')">
+        <th>
+          Действия
+        </th>
+      </div>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let order of orders">
+      <td> {{order.id}} </td>
+      <th>
+        <div *ngFor="let dish of order.dishes">
+          <span>{{dish.dish.name}} </span>
+          <span>{{dish.quantity}} шт.</span>
+        </div>
+      </th>
+
+      <td> {{order.price}} </td>
+      <td> {{order.clientName}} </td>
+      <td> {{order.clientPhone}} </td>
+
+
+      <div *ngIf="currentUser && currentUser.roles.includes('ROLE_CASHIER') && key==='active'">
+        <td>
+          <a (click)="acceptOrder(order.id)" class="btn btn-primary float-left">Подтвердить принятие поставки</a>
+        </td>
+      </div>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <ul class="nav nav-pills">
+    <li class="nav-item" *ngFor="let p of pages; let i=index">
+      <a class="nav-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+    </li>
+  </ul>
+</div>
+
+<!--<div class="alert alert-success" *ngIf="message">-->
+<!--  {{message}}-->
+<!--</div>-->
+
+<div *ngIf="message">
+  <div class="alert alert-success">{{message}}</div>
+</div>
+
+
+<a  class="btn btn-primary" [routerLink]="['/accountant']" >Назад</a>
+
